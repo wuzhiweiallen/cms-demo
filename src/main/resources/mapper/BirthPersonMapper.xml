@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ncs.demo.dao.BirthPersonDao" >
+  <resultMap id="BaseResultMap" type="com.ncs.demo.po.BirthPerson" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="RELATION" property="relation" jdbcType="VARCHAR" />
+    <result column="USER_ID" property="userId" jdbcType="INTEGER" />
+    <result column="BIRTHDAY" property="birthday" jdbcType="VARCHAR" />
+    <result column="ADDRESS" property="address" jdbcType="VARCHAR" />
+    <result column="GENDER" property="gender" jdbcType="VARCHAR" />
+    <result column="EMAIL" property="email" jdbcType="VARCHAR" />
+    <result column="AGE" property="age" jdbcType="INTEGER" />
+    <result column="STATUS" property="status" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="VARCHAR" />
+    <result column="UPDATE_DATE" property="updateDate" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, NAME, NAME, RELATION, USER_ID, BIRTHDAY, ADDRESS, GENDER, EMAIL, AGE, STATUS, CREATE_DATE,
+    UPDATE_TIME
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from BIRTH_PERSON
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from BIRTH_PERSON
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insertUser" parameterType="com.ncs.demo.po.BirthPerson" >
+    insert into BIRTH_PERSON (ID, NAME, RELATION, USER_ID,
+      BIRTHDAY, ADDRESS,
+      GENDER, EMAIL, AGE, STATUS,
+      CREATE_DATE, UPDATE_DATE)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{relation,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR},
+      #{birthday,jdbcType=DATE}, #{address,jdbcType=VARCHAR},
+      #{gender,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{age,jdbcType=INTEGER}, 1,
+      now(), now())
+  </insert>
+
+  <update id="updateUser" parameterType="com.ncs.demo.po.BirthPerson" >
+    update BIRTH_PERSON
+    set NAME = #{name,jdbcType=VARCHAR},
+      RELATION = #{relation,jdbcType=VARCHAR},
+      USER_ID = #{userId,jdbcType=VARCHAR},
+      BIRTHDAY = #{birthday,jdbcType=DATE},
+      ADDRESS = #{address,jdbcType=VARCHAR},
+      GENDER = #{gender,jdbcType=VARCHAR},
+      EMAIL = #{email,jdbcType=VARCHAR},
+      AGE = #{age,jdbcType=INTEGER},
+      STATUS = #{status,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=DATE},
+      UPDATE_DATE = #{updateDate,jdbcType=DATE}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+
+  <update id="logicDeleteUser" parameterType="com.ncs.demo.po.BirthPerson" >
+    update BIRTH_PERSON
+    set NAME = #{name,jdbcType=VARCHAR},
+    RELATION = #{relation,jdbcType=VARCHAR},
+    USER_ID = #{userId,jdbcType=VARCHAR},
+    BIRTHDAY = #{birthday,jdbcType=DATE},
+    ADDRESS = #{address,jdbcType=VARCHAR},
+    GENDER = #{gender,jdbcType=VARCHAR},
+    EMAIL = #{email,jdbcType=VARCHAR},
+    AGE = #{age,jdbcType=INTEGER},
+    STATUS = 0,
+    CREATE_DATE = #{createDate,jdbcType=DATE},
+    UPDATE_DATE = now()
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectUser" parameterType="java.util.HashMap" resultMap="BaseResultMap">
+    SELECT * FROM BIRTH_PERSON
+    <where>
+      <if test="name != null" >
+        AND NAME like '%${name}%'
+      </if>
+      <if test="birthday != null" >
+        AND BIRTHDAY = #{birthday}
+      </if>
+      AND USER_ID = #{userId}
+      AND STATUS = 1
+    </where>
+  </select>
+
+  <select id="selectUserCount" parameterType="java.util.HashMap" resultType="int">
+    SELECT COUNT(1) FROM BIRTH_PERSON
+    <where>
+      <if test="name != null" >
+        AND NAME like '%${name}%'
+      </if>
+      <if test="birthday != null" >
+        AND BIRTHDAY = #{birthday}
+      </if>
+      AND USER_ID = #{userId}
+      AND STATUS = 1
+    </where>
+  </select>
+  <select id="selectUserById" parameterType="int" resultType="com.ncs.demo.po.BirthPerson">
+    SELECT * FROM BIRTH_PERSON WHERE ID = #{id}
+  </select>
+
+  <select id="selectAllBirthPerson" resultMap="BaseResultMap">
+    SELECT * FROM BIRTH_PERSON
+  </select>
+
+</mapper>

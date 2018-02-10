@@ -1,0 +1,185 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>CMS</title>
+<link rel="stylesheet" href="../static/css/style.css" />
+<link rel="stylesheet" type="text/css" href="../static/css/jquery.datetimepicker.css" />
+
+	<link href="../static/css/default.css" rel="stylesheet" type="text/css" />
+	<link rel="stylesheet" type="text/css" href="../js/themes/default/easyui.css" />
+	<link rel="stylesheet" type="text/css" href="../js/themes/icon.css" />
+	<script type="text/javascript" src="../js/jquery-1.4.4.min.js"></script>
+	<script type="text/javascript" src="../js/jquery.easyui.min.1.2.2.js"></script>
+	<script src="../js/jquery.min.js"></script>
+	<!--背景图片自动更换-->
+	<script src="../js/supersized.3.2.7.min.js"></script>
+	<script src="../js/supersized-init.js"></script>
+	<!--表单验证-->
+	<script src="../js/jquery.validate.min.js?var1.14.0"></script>
+	<script src="../js/jquery.datetimepicker.full.js"></script>
+
+	<script type="text/javascript">
+		$(document).ready(function(){
+		$('#birthday').datetimepicker({
+			lang:"ch", //语言选择中文 注：旧版本 新版方法：$.datetimepicker.setLocale('ch');
+			format:"Y-m-d",      //格式化日期
+			timepicker:false,    //关闭时间选项
+			yearStart:2000,     //设置最小年份
+			yearEnd:2050,        //设置最大年份
+			todayButton:false    //关闭选择今天按钮
+		});
+		$("#registerButton").click(function(){
+			var name = $("#name").val();
+			var age = $("#age").val();
+			var gender = $("#gender").val();
+			var birthday = $("#birthday").val();
+			var username = $("#username").val();
+			var password = $("#password").val();
+			var email = $("#email").val();
+			/*$.post("http://localhost:8081/user/login",{"username":username,"password":password},function(result){
+			 var obj = JSON.parse(result);
+			 if(obj.code == "000000"){
+			 window.open("http://localhost:8081/index.html");
+			 }
+			 });*/
+			var json = {"name":name,"age":age,"gender":gender,"birthday":birthday,"username":username,
+				"password":password,"email":email};
+			$.ajax({
+				headers: {
+					Accept: "application/json; charset=utf-8"
+				},
+				method : 'POST',
+				url: "http://localhost:8081/user/saveUser",
+				contentType: 'application/json',
+				dataType:"json",
+				data: JSON.stringify(json),
+				//async: false, //true:异步，false:同步
+				//contentType: false,
+				//processData: false,
+				success: function (data) {
+					if(data.code == "000000"){
+						alert(data.desc);
+						window.location.href="http://localhost:8081/login.html";
+					}
+				},
+				error: function (err) {
+					alert("error");
+
+				}});
+		});
+		//注册表单验证
+		$("#registerForm").validate({
+			rules:{
+				username:{
+					required:true,//必填
+					minlength:3, //最少6个字符
+					maxlength:32,//最多20个字符
+					remote:{
+						url:"http://kouss.com/demo/Sharelink/remote.json",//用户名重复检查，别跨域调用
+						type:"post",
+					},
+				},
+				password:{
+					required:true,
+					minlength:3,
+					maxlength:32,
+				},
+				email:{
+					required:true,
+					email:true,
+				},
+				confirm_password:{
+					required:true,
+					minlength:3,
+					equalTo:'.password'
+				},
+				phone_number:{
+					required:true,
+					phone_number:true,//自定义的规则
+					digits:true,//整数
+				}
+			},
+			//错误信息提示
+			messages:{
+				username:{
+					required:"必须填写用户名",
+					minlength:"用户名至少为3个字符",
+					maxlength:"用户名至多为32个字符",
+					remote: "用户名已存在",
+				},
+				password:{
+					required:"必须填写密码",
+					minlength:"密码至少为3个字符",
+					maxlength:"密码至多为32个字符",
+				},
+				email:{
+					required:"请输入邮箱地址",
+					email: "请输入正确的email地址"
+				},
+				confirm_password:{
+					required: "请再次输入密码",
+					minlength: "确认密码不能少于3个字符",
+					equalTo: "两次输入密码不一致",//与另一个元素相同
+				},
+				phone_number:{
+					required:"请输入手机号码",
+					digits:"请输入正确的手机号码",
+				},
+
+			},
+		});
+		});
+	</script>
+<body>
+<div class="register-container">
+	<h1>注册</h1>
+	
+	<!--<div class="connect">
+		<p>Link the world. Share to world.</p>
+	</div>-->
+	
+	<form  method="post" id="registerForm">
+		<div>
+			<input id="name" type="text" name="name" class="username" placeholder="姓名" autocomplete="off"/>
+		</div>
+		<div>
+			<input id="age" type="text" name="age" class="username" placeholder="年龄" autocomplete="off"/>
+		</div>
+		<div>
+			<input id="gender" type="text" name="gender" class="username" placeholder="性别" autocomplete="off"/>
+		</div>
+		<div>
+			<input id="birthday" name="birthday" type="text" placeholder="生日">
+		</div>
+		<div>
+			<input id="username" type="text" name="username" class="username" placeholder="用户名" autocomplete="off"/>
+		</div>
+		<div>
+			<input id="password" type="password" name="password" class="password" placeholder="输入密码" oncontextmenu="return false" onpaste="return false" />
+		</div>
+		<div>
+			<input type="password" name="confirm_password" class="confirm_password" placeholder="再次输入密码" oncontextmenu="return false" onpaste="return false" />
+		</div>
+		<!--<div>
+			<input id="tel" type="text" name="phone_number" class="phone_number" placeholder="输入手机号码" autocomplete="off" id="number"/>
+		</div>-->
+		<div>
+			<input id="email" type="email" name="email" class="email" placeholder="输入邮箱地址" oncontextmenu="return false" onpaste="return false" />
+		</div>
+
+		<button id="registerButton" type="button">注 册</button>
+	</form>
+	<a href="index.html">
+		<button type="button" id="register" class="register-tis">已经有账号？</button>
+	</a>
+
+</div>
+
+</body>
+</html>
+<!--
+本代码由js代码收集并编辑整理;
+尊重他人劳动成果;
+转载请保留js代码链接 - www.jsdaima.com
+-->
