@@ -8,15 +8,14 @@ package com.ncs.demo.commons;
  * To change this template use File | Settings | File Templates.
  */
 public class CommonConstants {
-    /**
-     *
-     */
+
     public static final String SUCCESS_CODE = "000000";
     public static final String FAIL_CODE = "000001";
     public static final String SUCCESS_DESC = "操作成功";
     public static final String FAIL_DESC = "操作失败";
     public static final String REGISTER_SUCCESS_DESC = "注册成功";
     public static final String LOGIN_FAIL_DESC = "登录失败";
+    public static final String NOT_LOGIN = "您还没登录，请先登录";
     /**
      * 发送邮件的用户名
      */

@@ -7,7 +7,7 @@ public class BirthPerson {
 
     private String relation;
 
-    private int userId;
+    private Integer userId;
 
     private String birthday;
 
@@ -33,11 +33,11 @@ public class BirthPerson {
         this.relation = relation;
     }
 
-    public int getUserId() {
+    public Integer getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(Integer userId) {
         this.userId = userId;
     }
 

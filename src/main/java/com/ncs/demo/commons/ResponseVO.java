@@ -15,10 +15,10 @@ public class ResponseVO extends BaseResponseVO{
     private int total;
     private List rows;
 
-    public ResponseVO(int page, int size, int tota, List items) {
+    public ResponseVO(int page, int size, int total, List items) {
         this.page = page;
         this.size = size;
-        this.total = tota;
+        this.total = total;
         this.rows = items;
     }
 

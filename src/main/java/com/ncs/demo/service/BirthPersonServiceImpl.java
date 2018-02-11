@@ -57,11 +57,15 @@ public class BirthPersonServiceImpl implements BirthPersonService {
 
     @Override
     public void logicDeleteUser(UserQuery userQuery) {
-        List<Integer> userId = userQuery.getUserIds();
-        for(Integer id : userId){
+        List<Integer> userIds = userQuery.getUserIds();
+        userIds.forEach((id) -> {
             BirthPerson birthPerson = birthPersonDao.selectUserById(id);
             birthPersonDao.logicDeleteUser(birthPerson);
-        }
+        });
+        /*for(Integer id : userIds){
+            BirthPerson birthPerson = birthPersonDao.selectUserById(id);
+            birthPersonDao.logicDeleteUser(birthPerson);
+        }*/
     }
 
     @Override

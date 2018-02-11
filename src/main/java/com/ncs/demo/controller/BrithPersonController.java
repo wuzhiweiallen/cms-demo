@@ -35,7 +35,7 @@ public class BrithPersonController {
      * @return
      */
     @RequestMapping(value = "/getBirthPersonByCondition", method = {RequestMethod.GET})
-    public ResponseVO getUser(@RequestParam(value = "name", required = false) String name,
+    public ResponseVO getBirthPersonByCondition(@RequestParam(value = "name", required = false) String name,
                               @RequestParam(value = "birthday", required = false) String birthday,
                               @RequestParam(value = "page", defaultValue = "1") int page,
                               @RequestParam(value = "rows", defaultValue = "10") int size,
@@ -50,19 +50,20 @@ public class BrithPersonController {
             userQuery.setUserId(user.getId());
         }
         int total = birthPersonService.selectUserCount(userQuery);
+        List<BirthPerson> persons = birthPersonService.getUser(userQuery);
 
-        return new ResponseVO(page, size, total, birthPersonService.getUser(userQuery));
+        return new ResponseVO(page, size, total, persons);
     }
 
     /**
      * 删除用户根据用户ID
-     * @param userIds
+     * @param ids
      * @return
      */
     @RequestMapping(value = "/deleteBirthPerson", method = {RequestMethod.POST})
-    public BaseResponseVO deleteUser(@RequestParam(value = "id") List<Integer> userIds){
+    public BaseResponseVO deleteBirthPerson(@RequestParam(value = "id") List<Integer> ids){
         UserQuery userQuery = new UserQuery();
-        userQuery.setUserIds(userIds);
+        userQuery.setUserIds(ids);
         try{
             birthPersonService.logicDeleteUser(userQuery);
         } catch (Exception e) {
@@ -78,7 +79,7 @@ public class BrithPersonController {
      * @return
      */
     @RequestMapping(value = "/updateBirthPerson", method = {RequestMethod.POST})
-    public BaseResponseVO updateUser(BirthPerson birthPerson){
+    public BaseResponseVO updateBirthPerson(BirthPerson birthPerson){
         try{
 
             birthPersonService.updateUser(birthPerson);
@@ -90,12 +91,12 @@ public class BrithPersonController {
     }
 
     /**
-     * 插入用户
+     * 插入birthPerson
      * @param birthPerson
      * @return
      */
     @RequestMapping(value = "/saveBirthPerson", method = {RequestMethod.POST})
-    public BaseResponseVO saveUser(BirthPerson birthPerson, HttpSession httpSession){
+    public BaseResponseVO saveBirthPerson(BirthPerson birthPerson, HttpSession httpSession){
         User user = (User) httpSession.getAttribute("user");
         if(user != null){
             birthPerson.setUserId(user.getId());

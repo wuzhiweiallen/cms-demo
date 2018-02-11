@@ -8,8 +8,8 @@ package com.ncs.demo.commons;
  * To change this template use File | Settings | File Templates.
  */
 public class BaseResponseVO {
-    private String code = CommonConstants.SUCCESS_CODE;
-    private String desc = CommonConstants.SUCCESS_DESC;
+    protected String code = CommonConstants.SUCCESS_CODE;
+    protected String desc = CommonConstants.SUCCESS_DESC;
 
     public BaseResponseVO(String code, String desc) {
         this.code = code;

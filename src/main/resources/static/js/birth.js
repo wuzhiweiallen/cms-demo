@@ -42,8 +42,8 @@ function initDatagrid() {
             title : '姓名',
             width : 200
         }, {
-            field : 'username',
-            title : '用戶名',
+            field : 'relation',
+            title : '关系',
             width : 200
         }, {
             field : 'birthday',

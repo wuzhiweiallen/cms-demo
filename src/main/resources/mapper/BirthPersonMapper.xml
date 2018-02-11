@@ -12,14 +12,14 @@
     <result column="EMAIL" property="email" jdbcType="VARCHAR" />
     <result column="AGE" property="age" jdbcType="INTEGER" />
     <result column="STATUS" property="status" jdbcType="VARCHAR" />
-    <result column="CREATE_DATE" property="createDate" jdbcType="VARCHAR" />
-    <result column="UPDATE_DATE" property="updateDate" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" />
+    <result column="UPDATE_DATE" property="updateDate" />
   </resultMap>
   <sql id="Base_Column_List" >
-    ID, NAME, NAME, RELATION, USER_ID, BIRTHDAY, ADDRESS, GENDER, EMAIL, AGE, STATUS, CREATE_DATE,
-    UPDATE_TIME
+    ID, NAME, RELATION, USER_ID, BIRTHDAY, ADDRESS, GENDER, EMAIL, AGE, STATUS, CREATE_DATE,
+    UPDATE_DATE
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+  <select id="selectUserById" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
     from BIRTH_PERSON
@@ -44,15 +44,15 @@
     update BIRTH_PERSON
     set NAME = #{name,jdbcType=VARCHAR},
       RELATION = #{relation,jdbcType=VARCHAR},
-      USER_ID = #{userId,jdbcType=VARCHAR},
+      USER_ID = #{userId,jdbcType=INTEGER},
       BIRTHDAY = #{birthday,jdbcType=DATE},
       ADDRESS = #{address,jdbcType=VARCHAR},
       GENDER = #{gender,jdbcType=VARCHAR},
       EMAIL = #{email,jdbcType=VARCHAR},
       AGE = #{age,jdbcType=INTEGER},
       STATUS = #{status,jdbcType=VARCHAR},
-      CREATE_DATE = #{createDate,jdbcType=DATE},
-      UPDATE_DATE = #{updateDate,jdbcType=DATE}
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      UPDATE_DATE = now()
     where ID = #{id,jdbcType=INTEGER}
   </update>
 
@@ -99,9 +99,9 @@
       AND STATUS = 1
     </where>
   </select>
-  <select id="selectUserById" parameterType="int" resultType="com.ncs.demo.po.BirthPerson">
+  <!--<select id="selectUserById" parameterType="int" resultType="com.ncs.demo.po.BirthPerson">
     SELECT * FROM BIRTH_PERSON WHERE ID = #{id}
-  </select>
+  </select>-->
 
   <select id="selectAllBirthPerson" resultMap="BaseResultMap">
     SELECT * FROM BIRTH_PERSON
