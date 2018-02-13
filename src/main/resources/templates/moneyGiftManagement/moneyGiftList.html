@@ -1,0 +1,67 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>My JSP 'index.jsp' starting page</title>
+    <meta http-equiv="pragma" content="no-cache" />
+    <meta http-equiv="cache-control" content="no-cache" />
+    <meta http-equiv="expires" content="0" />
+    <meta http-equiv="keywords" content="keyword1,keyword2,keyword3" />
+    <meta http-equiv="description" content="This is my page" />
+    <meta charset="UTF-8" />
+    <link href="../css/default.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../js/themes/default/easyui.css" />
+    <link rel="stylesheet" type="text/css" href="../js/themes/icon.css" />
+    <script type="text/javascript" src="../js/jquery-1.4.4.min.js"></script>
+    <script type="text/javascript" src="../js/jquery.easyui.min.1.2.2.js"></script>
+    <script type="text/javascript" src="../js/moneyGift.js"></script>
+</head>
+<body>
+<!--条件查询 -->
+<div data-options="region:'north',split:false,border:false,title:'查询条件',collapsed:false,iconCls:'icon-search'" style="height:40px;margin:5px 5px 0 5px">
+    姓名:<input type="text"  name="name" id="name" class="easyui-validatebox" maxlength="10" style="height:15px;margin:0 5px 0 5px" />
+    送礼日期:<input type="text"  name="givenDateSearch" id="givenDateSearch" class="easyui-datebox" maxlength="10" style="height:15px;margin:0 5px 0 5px" />
+    &nbsp;&nbsp;<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-search'"  onclick="doSearch()">查询</a>
+</div>
+
+<table id="mTb" >
+
+</table>
+
+<div id="toolbar">
+    <a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="newMoneyGift()">新增</a>
+    <a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="editMoneyGift()">修改</a>
+    <a href="#" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="removeMoneyGift()">删除</a>
+</div>
+<div id="dlg" class="easyui-dialog" style="width:400px;height:280px;padding:30px 20px"
+     closed="true" buttons="#dlg-buttons">
+    <div class="ftitle">Money Gift Information</div>
+    <form id="fm" method="post">
+        <div class="fitem" style="display:none">
+            <label>ID:</label>
+            <input name="id" class="easyui-validatebox" />
+        </div>
+
+        <div class="fitem">
+            <label>姓名: </label>
+            <input name="name" class="easyui-validatebox" required="true" />
+        </div>
+        <div class="fitem" >
+            <label>日期: </label>
+            <input name="givenDate" id="givenDate" class="easyui-validatebox" />
+        </div>
+        <div class="fitem" >
+            <label>礼金: </label>
+            <input name="money" class="easyui-validatebox" />
+        </div>
+        <div class="fitem" >
+            <label>原因:</label>
+            <input name="reason" class="easyui-validatebox" />
+        </div>
+
+        <div id="dlg-buttons">
+            <a href="#" class="easyui-linkbutton" iconCls="icon-ok" onclick="saveMoneyGift()">Save</a>
+            <a href="#" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#dlg').dialog('close')">Cancel</a>
+        </div>
+    </form>
+</div>
+</body>
+</html>

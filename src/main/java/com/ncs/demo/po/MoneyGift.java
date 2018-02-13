@@ -13,11 +13,21 @@ public class MoneyGift {
 
     private String reason;
 
+    private String status;
+
     private String createTime;
 
     private Integer updateUser;
 
     private String updateTime;
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
     public Integer getId() {
         return id;

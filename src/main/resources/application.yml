@@ -2,7 +2,7 @@ server :
   port : 8081
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/cmsdemo?characterEncoding=UTF-8
+    url: jdbc:mysql://localhost:3306/cmsdemo?characterEncoding=UTF-8&useUnicode=true&characterEncoding=utf-8&useSSL=false
     username: root
     password: 123456
     driver-class-name: com.mysql.jdbc.Driver
@@ -15,7 +15,14 @@ spring:
     encoding: UTF-8
     content-type: text/html
     mode: HTML5
+  http:
+    encoding:
+      force: true
+      enabled: true
+      charset: UTF-8
 #公共配置与profiles选择无关 mapperLocations指的路径是src/main/resources
 mybatis:
   typeAliasesPackage: com.ncs.demo.po
   mapperLocations: classpath:mapper/*.xml
+#配置日志
+server.tomcat.uri-encoding: UTF-8

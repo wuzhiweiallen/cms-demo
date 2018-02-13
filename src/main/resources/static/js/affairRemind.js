@@ -1,35 +1,37 @@
-    $(function() {
-        initDatagrid();
-        /*$.getJSON("/birthPerson/getBirthPersonByCondition",function(json){
-            $('#mTb').datagrid('loadData', json);
-        });*/
-    });
+$(function() {
+    initDatagrid();
+    /*$.getJSON("/moneyGift/getMoneyGiftByCondition",function(json){
+     $('#mTb').datagrid('loadData', json);
+     });*/
+});
 
 function initDatagrid() {
-    $('#birthday').datebox({
+    /*$('#remindTime').datetimebox({
         closeText:'关闭',
-        formatter:function(date){
+        onSelect:function(date){
             var y = date.getFullYear();
             var m = date.getMonth()+1;
             var d = date.getDate();
+            var h = date.getHours()
             m = (m < 10 ? '0' : '') + m;
-            return y+'-'+m+'-'+d;
+            return y+'-'+m+'-'+ d + '' + h +':00:00';
         },
-    });
-    $('#birthdaySearch').datebox({
+    });*/
+    /*$('#remindTimeSearch').datetimebox({
         closeText:'关闭',
-        formatter:function(date){
+        onSelect:function(date){
             var y = date.getFullYear();
             var m = date.getMonth()+1;
             var d = date.getDate();
+            var h = date.getHours()
             m = (m < 10 ? '0' : '') + m;
-            return y+'-'+m+'-'+d;
+            return y+'-'+m+'-'+ d + '' + h +':00:00';
         },
-    });
+    });*/
     $('#mTb').datagrid({
         loadMsg : '正在加载数据...',
         method : 'GET',
-        url: "/birthPerson/getBirthPersonByCondition",
+        url: "/affairRemind/getAffairRemindByCondition",
         striped : true,
         fitColumns : true,
         checkOnSelect : true,
@@ -42,58 +44,43 @@ function initDatagrid() {
         pageList : [ 10, 20, 30],
         pageNumber : 1,
         columns : [ [ {
-            field : 'id',
-            title : '用户ID',
+            field : 'subject',
+            title : '主题',
             width : 200
         }, {
-            field : 'name',
-            title : '姓名',
+            field : 'content',
+            title : '内容',
             width : 200
         }, {
-            field : 'relation',
-            title : '关系',
+            field : 'remindTime',
+            title : '提醒时间',
             width : 200
         }, {
-            field : 'birthday',
-            title : '生日',
+            field : 'cron',
+            title : '定时器规则',
             width : 200
-        }, {
-            field : 'address',
-            title : '地址',
-            width : 200
-        },{
-            field : 'gender',
-            title : '性別',
-            width : 200
-        },{
-            field : 'email',
-            title : 'email',
-            width : 200
-        },{
-            field : 'age',
-            title : '年龄',
-            width : 200
-        } ] ],
+        }] ],
         toolbar : '#tb'
 
     });
 }
 var url;
-function newUser(){
+function newAffairRemind(){
     $('#dlg').dialog('open').dialog('setTitle','新增');
     $('#fm').form('clear');
-    url = '/birthPerson/saveBirthPerson';
+    url = '/affairRemind/saveAffairRemind';
 }
-function editUser(){
+function editAffairRemind(){
     var row = $('#mTb').datagrid('getSelected');
     if (row){
         $('#dlg').dialog('open').dialog('setTitle','修改');
         $('#fm').form('load',row);
-        $('#birthday').datebox('setValue', row.birthday);
-        url = '/birthPerson/updateBirthPerson';
+        console.log(row.givenDate);
+        /*$('#remindTime').datetimebox('setValue', row.remindTime);*/
+        url = '/affairRemind/updateAffairRemind';
     }
 }
-function saveUser(){
+function saveAffairRemind(){
     $('#fm').form('submit',{
         url: url,
         onSubmit: function(){
@@ -118,7 +105,7 @@ function saveUser(){
         }
     });
 }
-function removeUser(){
+function removeAffairRemind(){
     var row = $('#mTb').datagrid('getSelections');
     var idString = "";
     for(var i=0 ; i < row.length; i++){
@@ -134,7 +121,7 @@ function removeUser(){
             if (r){
                 $.ajax({
                     method : 'POST',
-                    url: "/birthPerson/deleteBirthPerson/",
+                    url: "/affairRemind/deleteAffairRemind/",
                     dataType:"json",
                     data: id,
                     //async: false, //true:异步，false:同步
@@ -151,7 +138,7 @@ function removeUser(){
                         alert("error");
 
                     }});
-                $.post('/birthPerson/deleteBirthPerson/', id, function(result){
+                $.post('/affairRemind/deleteAffairRemind/', id, function(result){
                     if (result){
                         var resobj = JSON.parse(result);
 
@@ -168,17 +155,18 @@ function removeUser(){
 }
 
 function doSearch(){
-    var name = $("#name").val();
-    var birthday = $('#birthdaySearch').datebox('getValue');
-    var url = "/birthPerson/getBirthPersonByCondition";
-    if(name){
-        url = url + "?name=" + name;
-        if(birthday){
-            url = url + "&birthday=" + birthday;
+    var subject = $("#subject").val();
+    var remindTime = $("#remindTimeSearch").val();
+    /*var remindTime = $('#remindTimeSearch').datetimebox('getValue');*/
+    var url = "/affairRemind/getAffairRemindByCondition";
+    if(subject){
+        url = url + "?subject=" + subject;
+        if(remindTime){
+            url = url + "&remindTime=" + remindTime;
         }
     } else {
-        if(birthday){
-            url = url + "?birthday=" + birthday;
+        if(remindTime){
+            url = url + "?remindTime=" + remindTime;
         }
     }
     $.ajax({

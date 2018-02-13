@@ -45,4 +45,28 @@ public class HomeController {
         return "/birthdayManagement/"+pageName;
     }
 
+    @RequestMapping(value = "/moneyGiftManagement/{page_name}", method = {RequestMethod.GET})
+    public String getMoneyGiftManagementHome(@PathVariable("page_name") String pageName,
+                                            HttpSession httpSession){
+        User user = (User) httpSession.getAttribute("user");
+        if(user == null){
+            return "login";
+        }
+        httpSession.setAttribute("username", user.getName());
+
+        return "/moneyGiftManagement/"+pageName;
+    }
+
+    @RequestMapping(value = "/affairRemindManagement/{page_name}", method = {RequestMethod.GET})
+    public String getAffairRemindManagementHome(@PathVariable("page_name") String pageName,
+                                             HttpSession httpSession){
+        User user = (User) httpSession.getAttribute("user");
+        if(user == null){
+            return "login";
+        }
+        httpSession.setAttribute("username", user.getName());
+
+        return "/affairRemindManagement/"+pageName;
+    }
+
 }

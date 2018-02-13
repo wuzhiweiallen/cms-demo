@@ -4,16 +4,17 @@
   <resultMap id="BaseResultMap" type="com.ncs.demo.po.MoneyGift" >
     <id column="ID" property="id" jdbcType="INTEGER" />
     <result column="NAME" property="name" jdbcType="VARCHAR" />
-    <result column="GIVEN_DATE" property="givenDate" jdbcType="DATE" />
+    <result column="GIVEN_DATE" property="givenDate" jdbcType="VARCHAR" />
     <result column="MONEY" property="money" jdbcType="INTEGER" />
     <result column="USER_ID" property="userId" jdbcType="INTEGER" />
     <result column="REASON" property="reason" jdbcType="VARCHAR" />
-    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="STATUS" property="status" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="VARCHAR" />
     <result column="UPDATE_USER" property="updateUser" jdbcType="INTEGER" />
-    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    ID, NAME, GIVEN_DATE, MONEY, USER_ID, REASON, CREATE_TIME, UPDATE_USER,
+    ID, NAME, GIVEN_DATE, MONEY, USER_ID, REASON, STATUS, CREATE_TIME, UPDATE_USER,
     UPDATE_TIME
   </sql>
   <select id="selectMoneyGiftById" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
@@ -27,12 +28,12 @@
     where ID = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.ncs.demo.po.MoneyGift" >
-    insert into money_gift (ID, NAME, GIVEN_DATE, 
-      MONEY, USER_ID, REASON, STATUS
-      , CREATE_TIME, UPDATE_USER,
+    insert into money_gift (NAME, GIVEN_DATE,
+      MONEY, USER_ID, REASON, STATUS,
+      CREATE_TIME, UPDATE_USER,
       UPDATE_TIME)
-    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{givenDate,jdbcType=DATE}, 
-      #{money,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{reason,jdbcType=VARCHAR}, 1
+    values ( #{name,jdbcType=VARCHAR}, #{givenDate,jdbcType=DATE},
+      #{money,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{reason,jdbcType=VARCHAR}, 1,
       now(), #{updateUser,jdbcType=INTEGER},
       now())
   </insert>
@@ -132,32 +133,29 @@
     set NAME = #{name,jdbcType=VARCHAR},
       GIVEN_DATE = #{givenDate,jdbcType=DATE},
       MONEY = #{money,jdbcType=INTEGER},
-      USER_ID = #{userId,jdbcType=INTEGER},
       REASON = #{reason,jdbcType=VARCHAR},
-      STATUS = #{status,jdbcType=VARCHAR},
-      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
       UPDATE_USER = #{updateUser,jdbcType=INTEGER},
-      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
+      UPDATE_TIME = now()
     where ID = #{id,jdbcType=INTEGER}
   </update>
 
   <update id="logicDelete" parameterType="com.ncs.demo.po.MoneyGift" >
     update money_gift
     set
-    STATUS = 1,
+    STATUS = 0,
     UPDATE_USER = #{updateUser,jdbcType=INTEGER},
     UPDATE_TIME = now()
     where ID = #{id,jdbcType=INTEGER}
   </update>
 
   <select id="selectMoneyGift" parameterType="java.util.HashMap" resultMap="BaseResultMap">
-    SELECT * FROM BIRTH_PERSON
+    SELECT * FROM MONEY_GIFT
     <where>
       <if test="name != null  and name != '' " >
-        AND NAME like #{name}
+        AND NAME like '%${name}%'
       </if>
       <if test="givenDate != null and givenDate != ''" >
-        AND GIVEN_DATE = '%${givenDate}%'
+        AND GIVEN_DATE = #{givenDate}
       </if>
       AND USER_ID = #{userId}
       AND STATUS = 1
@@ -165,13 +163,13 @@
   </select>
 
   <select id="selectMoneyGiftCount" parameterType="java.util.HashMap" resultType="int">
-    SELECT COUNT(1) FROM BIRTH_PERSON
+    SELECT COUNT(1) FROM MONEY_GIFT
     <where>
       <if test="name != null  and name != '' " >
-        AND NAME like #{name}
+        AND NAME like '%${name}%'
       </if>
       <if test="givenDate != null and givenDate != ''" >
-        AND GIVEN_DATE = '%${givenDate}%'
+        AND GIVEN_DATE = #{givenDate}
       </if>
       AND USER_ID = #{userId}
       AND STATUS = 1

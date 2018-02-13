@@ -1,6 +1,7 @@
 package com.ncs.demo.service;
 
 import com.ncs.demo.po.User;
+import com.ncs.demo.query.UserQuery;
 
 /**
  * Created by 84234261@qq.com
@@ -14,4 +15,6 @@ public interface UserService {
     User login(String username, String password);
 
     void insert(User user);
+
+    void modifyPassword(UserQuery query);
 }

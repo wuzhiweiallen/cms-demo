@@ -3,6 +3,7 @@ package com.ncs.demo.controller;
 import com.ncs.demo.commons.BaseResponseVO;
 import com.ncs.demo.commons.CommonConstants;
 import com.ncs.demo.po.User;
+import com.ncs.demo.query.UserQuery;
 import com.ncs.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -42,13 +43,24 @@ public class UserController {
         }
         if(user != null){
             session.setAttribute("user", user);
-            session.setAttribute("username", user.getUsername());
+            session.setAttribute("name", user.getName());
             /*return "index";*/
             return new BaseResponseVO(CommonConstants.SUCCESS_CODE, CommonConstants.SUCCESS_DESC);
         }
 
         /*return "login";*/
         return new BaseResponseVO(CommonConstants.FAIL_CODE, CommonConstants.LOGIN_FAIL_DESC);
+    }
+
+    @RequestMapping(value = "/logout")
+    public String logout(HttpSession session){
+        try {
+            session.removeAttribute("user");
+            session.removeAttribute("name");
+        } catch (Exception e) {
+        }
+
+        return "login";
     }
 
     @PostMapping("/saveUser")
@@ -61,6 +73,20 @@ public class UserController {
         }
 
         return new BaseResponseVO(CommonConstants.SUCCESS_CODE, CommonConstants.REGISTER_SUCCESS_DESC);
+    }
+
+    @RequestMapping("/modifyPassword")
+    @ResponseBody
+    public BaseResponseVO modifyPassword(@RequestParam(value = "password") String password, HttpSession session){
+        User user = (User) session.getAttribute("user");
+        if(user == null){
+            return new BaseResponseVO(CommonConstants.NOT_LOGIN_CODE, CommonConstants.NOT_LOGIN);
+        }
+        UserQuery query = new UserQuery();
+        query.setPassword(password);
+        query.setUserId(user.getId());
+        userService.modifyPassword(query);
+        return new BaseResponseVO(CommonConstants.SUCCESS_CODE, CommonConstants.SUCCESS_DESC);
     }
 
 }

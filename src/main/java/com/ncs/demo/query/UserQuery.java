@@ -16,6 +16,15 @@ public class UserQuery extends BaseQuery{
     private int userId;
     private List<Integer> userIds;
     private String birthday;
+    private String password;
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
     public String getBirthday() {
         return birthday;
@@ -47,5 +56,15 @@ public class UserQuery extends BaseQuery{
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return "UserQuery{" +
+                "name='" + name + '\'' +
+                ", userId=" + userId +
+                ", userIds=" + userIds +
+                ", birthday='" + birthday + '\'' +
+                '}';
     }
 }

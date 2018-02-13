@@ -11,6 +11,7 @@ public class CommonConstants {
 
     public static final String SUCCESS_CODE = "000000";
     public static final String FAIL_CODE = "000001";
+    public static final String NOT_LOGIN_CODE = "000002";
     public static final String SUCCESS_DESC = "操作成功";
     public static final String FAIL_DESC = "操作失败";
     public static final String REGISTER_SUCCESS_DESC = "注册成功";

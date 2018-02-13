@@ -9,7 +9,6 @@ import com.ncs.demo.query.MoneyGiftQuery;
 import com.ncs.demo.service.MoneyGiftService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
@@ -23,7 +22,7 @@ import java.util.List;
  * To change this template use File | Settings | File Templates.
  */
 @RestController
-@RequestMapping("/moneygift")
+@RequestMapping("/moneyGift")
 public class MoneyGiftController {
 
     private Logger logger = Logger.getLogger(MoneyGiftController.class);
@@ -31,22 +30,24 @@ public class MoneyGiftController {
     @Autowired
     private MoneyGiftService moneyGiftService;
 
-    @GetMapping("/getMoneyGifyByCondition")
-    public BaseResponseVO getMoneyGifyByCondition(@RequestParam("name") String name,
-                                                  @RequestParam(value = "givenDay") String givenDay,
-                                                  @RequestParam(value = "page", defaultValue = "20") int page,
+    @GetMapping("/getMoneyGiftByCondition")
+    public BaseResponseVO getMoneyGifyByCondition(@RequestParam(value = "name", required = false) String name,
+                                                  @RequestParam(value = "givenDate", required = false) String givenDate,
+                                                  @RequestParam(value = "page", defaultValue = "1") int page,
                                                   @RequestParam(value = "size", defaultValue = "20") int size,
                                                   HttpSession session){
         int total;
         List<MoneyGift> moneyGifts;
         MoneyGiftQuery query = new MoneyGiftQuery();
-        query.setGivenDay(givenDay);
+        query.setGivenDate(givenDate);
         query.setName(name);
+        query.setPage(page);
+        query.setSize(size);
         User user = (User) session.getAttribute("user");
         if(user != null){
             query.setUserId(user.getId());
         } else {
-            return new BaseResponseVO(CommonConstants.FAIL_CODE, CommonConstants.NOT_LOGIN);
+            return new BaseResponseVO(CommonConstants.NOT_LOGIN_CODE, CommonConstants.NOT_LOGIN);
         }
         try{
             total = moneyGiftService.getMoneyGiftCount(query);
@@ -59,7 +60,7 @@ public class MoneyGiftController {
         return new ResponseVO(page, size, total, moneyGifts);
     }
 
-    @PostMapping("/deleteMoneyGify")
+    @PostMapping("/deleteMoneyGift")
     public BaseResponseVO deleteMoneyGify(@RequestParam(value = "id") List<Integer> ids){
 
         MoneyGiftQuery query = new MoneyGiftQuery();

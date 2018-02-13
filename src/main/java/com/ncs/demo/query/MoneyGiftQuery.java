@@ -16,7 +16,7 @@ public class MoneyGiftQuery extends BaseQuery {
     private String name;
     private int userId;
     //送礼金的日期
-    private String givenDay;
+    private String givenDate;
     private List<Integer> ids;
 
     public List<Integer> getIds() {
@@ -43,12 +43,12 @@ public class MoneyGiftQuery extends BaseQuery {
         this.userId = userId;
     }
 
-    public String getGivenDay() {
-        return givenDay;
+    public String getGivenDate() {
+        return givenDate;
     }
 
-    public void setGivenDay(String givenDay) {
-        this.givenDay = givenDay;
+    public void setGivenDate(String givenDate) {
+        this.givenDate = givenDate;
     }
 
     @Override
@@ -56,7 +56,8 @@ public class MoneyGiftQuery extends BaseQuery {
         return "MoneyGiftQuery{" +
                 "name='" + name + '\'' +
                 ", userId=" + userId +
-                ", givenDay='" + givenDay + '\'' +
+                ", givenDate='" + givenDate + '\'' +
+                ", ids=" + ids +
                 '}';
     }
 }

@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ncs.demo.dao.AffairRemindDao" >
+  <resultMap id="BaseResultMap" type="com.ncs.demo.po.AffairRemind" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="SUBJECT" property="subject" jdbcType="VARCHAR" />
+    <result column="CONTENT" property="content" jdbcType="VARCHAR" />
+    <result column="CRON" property="cron" jdbcType="VARCHAR" />
+    <result column="REMIND_TIME" property="remindTime" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="VARCHAR" />
+    <result column="UPDATE_USER" property="updateUser" jdbcType="VARCHAR" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="VARCHAR" />
+    <result column="CREATE_USER" property="createUser" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, SUBJECT, DESC, CRON, REMIND_TIME, STATUS, UPDATE_USER, UPDATE_TIME, CREATE_USER, 
+    CREATE_TIME
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from affair_remind
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from affair_remind
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.ncs.demo.po.AffairRemind" >
+    insert into affair_remind (SUBJECT, CONTENT,
+      CRON, REMIND_TIME, STATUS, 
+      UPDATE_USER, UPDATE_TIME, CREATE_USER, 
+      CREATE_TIME)
+    values (#{subject,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR},
+      #{cron,jdbcType=VARCHAR}, #{remindTime,jdbcType=TIMESTAMP}, 1,
+      #{updateUser,jdbcType=VARCHAR}, now(), #{createUser,jdbcType=VARCHAR},
+      now())
+  </insert>
+  <insert id="insertSelective" parameterType="com.ncs.demo.po.AffairRemind" >
+    insert into affair_remind
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="subject != null" >
+        SUBJECT,
+      </if>
+      <if test="desc != null" >
+        CONTENT,
+      </if>
+      <if test="CRON != null" >
+        CRON,
+      </if>
+      <if test="remindTime != null" >
+        REMIND_TIME,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="updateUser != null" >
+        UPDATE_USER,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+      <if test="createUser != null" >
+        CREATE_USER,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="subject != null" >
+        #{subject,jdbcType=VARCHAR},
+      </if>
+      <if test="desc != null" >
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="CRON != null" >
+        #{cron,jdbcType=VARCHAR},
+      </if>
+      <if test="remindTime != null" >
+        #{remindTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="updateUser != null" >
+        #{updateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUser != null" >
+        #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ncs.demo.po.AffairRemind" >
+    update affair_remind
+    <set >
+      <if test="subject != null" >
+        SUBJECT = #{subject,jdbcType=VARCHAR},
+      </if>
+      <if test="desc != null" >
+        CONTENT = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="CRON != null" >
+        CRON = #{cron,jdbcType=VARCHAR},
+      </if>
+      <if test="remindTime != null" >
+        REMIND_TIME = #{remindTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="updateUser != null" >
+        UPDATE_USER = #{updateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUser != null" >
+        CREATE_USER = #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ncs.demo.po.AffairRemind" >
+    update affair_remind
+    set SUBJECT = #{subject,jdbcType=VARCHAR},
+      CONTENT = #{content,jdbcType=VARCHAR},
+      CRON = #{cron,jdbcType=VARCHAR},
+      REMIND_TIME = #{remindTime,jdbcType=TIMESTAMP},
+      UPDATE_USER = #{updateUser,jdbcType=VARCHAR},
+      UPDATE_TIME = now()
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+
+  <update id="logicDeleteAffairRemind" parameterType="com.ncs.demo.po.AffairRemind" >
+    update affair_remind
+    set STATUS = 1,
+    UPDATE_USER = #{updateUser,jdbcType=VARCHAR},
+    UPDATE_TIME = now()
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectAllAffairRemind"  resultMap="BaseResultMap">
+    SELECT * FROM AFFAIR_REMIND WHERE STATUS = 1
+  </select>
+
+  <select id="selectAffairRemind" parameterType="java.util.HashMap" resultMap="BaseResultMap">
+    SELECT * FROM AFFAIR_REMIND
+    <where>
+      <if test="subject != null and subject != ''" >
+        AND SUBJECT like '%${subject}%'
+      </if>
+      <if test="remindTime != null and remindTime != ''" >
+        AND REMIND_TIME = #{remindTime}
+      </if>
+      AND CREATE_USER = #{userId}
+      AND STATUS = 1
+    </where>
+  </select>
+
+  <select id="selectAffairRemindCount" parameterType="java.util.HashMap" resultType="int" >
+    SELECT COUNT(1) FROM AFFAIR_REMIND
+    <where>
+      <if test="subject != null and subject != ''" >
+        AND SUBJECT like '%${subject}%'
+      </if>
+      <if test="remindTime != null and remindTime != ''" >
+        AND REMIND_TIME = #{remindTime}
+      </if>
+      AND CREATE_USER = #{userId}
+      AND STATUS = 1
+    </where>
+  </select>
+
+  <select id="selectAffairRemindById" resultType="com.ncs.demo.po.AffairRemind" parameterType="int">
+    SELECT * FROM AFFAIR_REMIND WHERE ID = #{id}
+  </select>
+
+</mapper>

@@ -43,11 +43,11 @@ public class MoneyGiftServiceImpl implements MoneyGiftService{
         int page = moneyGiftQuery.getPage();
         int size = moneyGiftQuery.getSize();
         String name = moneyGiftQuery.getName();
-        String givenDay = moneyGiftQuery.getGivenDay();
+        String givenDate = moneyGiftQuery.getGivenDate();
         int userId = moneyGiftQuery.getUserId();
         Map map = new HashMap();
         map.put("name", name);
-        map.put("givenDay", givenDay);
+        map.put("givenDate", givenDate);
         map.put("userId", userId);
         RowBounds rowBounds = new RowBounds((page - 1) * size, size);
 
@@ -57,11 +57,11 @@ public class MoneyGiftServiceImpl implements MoneyGiftService{
     @Override
     public int getMoneyGiftCount(MoneyGiftQuery moneyGiftQuery) {
         String name = moneyGiftQuery.getName();
-        String givenDay = moneyGiftQuery.getGivenDay();
+        String givenDate = moneyGiftQuery.getGivenDate();
         int userId = moneyGiftQuery.getUserId();
         Map map = new HashMap();
         map.put("name", name);
-        map.put("givenDay", givenDay);
+        map.put("givenDate", givenDate);
         map.put("userId", userId);
 
         return moneyGiftDao.selectMoneyGiftCount(map);

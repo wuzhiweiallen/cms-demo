@@ -2,6 +2,7 @@ package com.ncs.demo.service;
 
 import com.ncs.demo.dao.UserDao;
 import com.ncs.demo.po.User;
+import com.ncs.demo.query.UserQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,5 +28,16 @@ public class UserServiceImpl implements UserService {
     public void insert(User user) {
 
         userDao.insert(user);
+    }
+
+    @Override
+    public void modifyPassword(UserQuery query) {
+        String password = query.getPassword();
+        int id = query.getUserId();
+        User user = userDao.selectByPrimaryKey(id);
+        if(user != null){
+            user.setPassword(password);
+        }
+        userDao.updateByPrimaryKey(user);
     }
 }
