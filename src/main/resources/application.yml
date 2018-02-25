@@ -6,23 +6,21 @@ spring:
     username: root
     password: 123456
     driver-class-name: com.mysql.jdbc.Driver
-#thymeleaf start
-  thymeleaf:
-    cache: false
-    prefix: classpath:/templates/
-    check-template-location: true
-    suffix: .html
-    encoding: UTF-8
-    content-type: text/html
-    mode: HTML5
   http:
     encoding:
       force: true
-      enabled: true
       charset: UTF-8
+      enabled: true
 #公共配置与profiles选择无关 mapperLocations指的路径是src/main/resources
 mybatis:
   typeAliasesPackage: com.ncs.demo.po
   mapperLocations: classpath:mapper/*.xml
 #配置日志
-server.tomcat.uri-encoding: UTF-8
+logging:
+  #配置日志文件路径
+  path: D:\opt\logs\cms-demo
+  level:
+    xatu.zsl: debug #不同目录下的日志可配置不同级别
+    org.springfromework.web: info
+    org.hibernate: error
+    com.ncs.demo.dao: DEBUG

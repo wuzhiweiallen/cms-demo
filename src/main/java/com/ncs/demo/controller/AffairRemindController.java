@@ -83,7 +83,7 @@ public class AffairRemindController {
      * @param affairRemind
      * @return
      */
-    @RequestMapping(value = "/updateAffairRemind", method = {RequestMethod.POST}, produces = "text/json;charset=UTF-8")
+    @RequestMapping(value = "/updateAffairRemind", method = {RequestMethod.POST})
     public BaseResponseVO updateAffairRemind(AffairRemind affairRemind){
         try{
 
@@ -100,7 +100,7 @@ public class AffairRemindController {
      * @param affairRemind
      * @return
      */
-    @RequestMapping(value = "/saveAffairRemind", method = {RequestMethod.POST}, produces = "text/json;charset=UTF-8")
+    @RequestMapping(value = "/saveAffairRemind", method = {RequestMethod.POST})
     public BaseResponseVO saveBirthPerson(AffairRemind affairRemind, HttpSession httpSession){
         User user = (User) httpSession.getAttribute("user");
         if(user != null){

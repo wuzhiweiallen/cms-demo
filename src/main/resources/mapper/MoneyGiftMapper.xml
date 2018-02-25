@@ -34,7 +34,7 @@
       UPDATE_TIME)
     values ( #{name,jdbcType=VARCHAR}, #{givenDate,jdbcType=DATE},
       #{money,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{reason,jdbcType=VARCHAR}, 1,
-      now(), #{updateUser,jdbcType=INTEGER},
+      now(), #{userId,jdbcType=INTEGER},
       now())
   </insert>
   <insert id="insertSelective" parameterType="com.ncs.demo.po.MoneyGift" >

@@ -21,6 +21,9 @@ public class HomeController {
     @RequestMapping(value = "{page_name}")
     public String getHome(@PathVariable("page_name") String pageName,
                           HttpSession httpSession){
+        if(pageName.equals("register")){
+            return pageName;
+        }
         User user = (User) httpSession.getAttribute("user");
         if(user == null){
             return "login";

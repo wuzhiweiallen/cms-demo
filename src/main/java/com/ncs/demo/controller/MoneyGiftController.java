@@ -104,11 +104,11 @@ public class MoneyGiftController {
         } else {
             return new BaseResponseVO(CommonConstants.FAIL_CODE, "请先登录");
         }
-        try{
+        /*try{*/
             moneyGiftService.insert(moneyGift);
-        } catch (Exception e) {
+        /*} catch (Exception e) {
             return new BaseResponseVO(CommonConstants.FAIL_CODE, e.getMessage());
-        }
+        }*/
 
         return new BaseResponseVO(CommonConstants.SUCCESS_CODE, CommonConstants.SUCCESS_DESC);
     }

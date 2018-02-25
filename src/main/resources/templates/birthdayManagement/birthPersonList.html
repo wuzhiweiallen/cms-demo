@@ -1,4 +1,4 @@
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" >
   <head>
     <title>My JSP 'index.jsp' starting page</title>
     <meta http-equiv="pragma" content="no-cache" />
@@ -48,12 +48,12 @@
                 <input name="id" class="easyui-validatebox" />
             </div>
             <div class="fitem" style="display:none">
-                <label>USER ID:</label>
+                <label>USER ID: </label>
                 <input name="userId" class="easyui-validatebox" />
             </div>
             <div class="fitem">
-                <label>生日 :</label>
-                <input id="birthday" name="birthday" class="easyui-datebox" />
+                <label>生日: </label>
+                <input id="birthday" name="birthday" class="easyui-datebox" required="true" />
             </div>
             <div class="fitem">
                 <label>地址: </label>
@@ -64,8 +64,8 @@
                 <input name="gender" class="easyui-validatebox" />
             </div>
             <div class="fitem">
-                <label>EMAIL:</label>
-                <input name="email" class="easyui-validatebox" validType="email" required="false" />
+                <label>EMAIL: </label>
+                <input name="email" class="easyui-validatebox" validType="email" />
             </div>
             <div class="fitem">
                 <label>年龄: </label>

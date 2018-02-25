@@ -167,7 +167,7 @@
         AND SUBJECT like '%${subject}%'
       </if>
       <if test="remindTime != null and remindTime != ''" >
-        AND REMIND_TIME = #{remindTime}
+        AND REMIND_TIME like '%${remindTime}%'
       </if>
       AND CREATE_USER = #{userId}
       AND STATUS = 1
@@ -181,7 +181,7 @@
         AND SUBJECT like '%${subject}%'
       </if>
       <if test="remindTime != null and remindTime != ''" >
-        AND REMIND_TIME = #{remindTime}
+        AND REMIND_TIME like '%${remindTime}%'
       </if>
       AND CREATE_USER = #{userId}
       AND STATUS = 1

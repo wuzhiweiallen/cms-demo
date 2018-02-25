@@ -28,10 +28,47 @@
 
 <div id="toolbar">
     <a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="newMoneyGift()">新增</a>
-    <a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="editMoneyGift()">修改</a>
+    <a href="#"  class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="editMoneyGift()">修改</a>
     <a href="#" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="removeMoneyGift()">删除</a>
 </div>
-<div id="dlg" class="easyui-dialog" style="width:400px;height:280px;padding:30px 20px"
+
+<div id="dlg" class="easyui-window" title="修改" collapsible="false" minimizable="false" closed="true"
+     maximizable="false" icon="icon-save"  style="width:400px;height:280px;padding: 5px;
+        background: #fafafa;">
+    <div class="easyui-layout" fit="true">
+        <div region="center" border="false" style="padding: 10px; background: #fff; border: 1px solid #ccc;">
+            <form id="fm" method="post">
+            <table cellpadding="3">
+                <div class="fitem" style="display:none">
+                    <label>ID:</label>
+                    <input name="id" class="easyui-validatebox" />
+                </div>
+                <tr>
+                    <td>姓名:</td>
+                    <td><input name="name" class="easyui-validatebox" /></td>
+                </tr>
+                <tr>
+                    <td>日期：</td>
+                    <td><input name="givenDate" id="givenDate" class="easyui-validatebox" /></td>
+                </tr>
+                <tr>
+                    <td>礼金: </td>
+                    <td><input name="money" class="easyui-validatebox" /></td>
+                </tr>
+                <tr>
+                    <td>原因:</td>
+                    <td><input name="reason" class="easyui-validatebox" /></td>
+                </tr>
+            </table>
+            </form>
+        </div>
+        <div region="south" border="false" style="text-align: right; height: 30px; line-height: 30px;">
+            <a id="btnEp" class="easyui-linkbutton" icon="icon-ok" onclick="saveMoneyGift()" >
+                确定</a> <a id="btnCancel" onclick="javascript:$('#dlg').dialog('close')" class="easyui-linkbutton" icon="icon-cancel" >取消</a>
+        </div>
+    </div>
+</div>
+<!--<div id="dlg" class="easyui-dialog" style="width:400px;height:280px;padding:30px 20px"
      closed="true" buttons="#dlg-buttons">
     <div class="ftitle">Money Gift Information</div>
     <form id="fm" method="post">
@@ -62,6 +99,6 @@
             <a href="#" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#dlg').dialog('close')">Cancel</a>
         </div>
     </form>
-</div>
+</div>-->
 </body>
 </html>

@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by 84234261@qq.com
@@ -60,7 +62,7 @@ public class UserController {
         } catch (Exception e) {
         }
 
-        return "login";
+        return "redirect:login";
     }
 
     @PostMapping("/saveUser")

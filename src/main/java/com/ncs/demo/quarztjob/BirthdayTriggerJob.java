@@ -80,7 +80,7 @@ public class BirthdayTriggerJob {
     "0 15 10 ? * *" 每天上午10:15触发
     "0 15 10 * * ?" 每天上午10:15触发
     "0 15 10 * * ? *" 每天上午10:15触发*/
-    @Scheduled(cron = "0 0 10,16 * * ?") // 每天上午十点和下午四点执行
+    @Scheduled(cron = "0 30,10 10,15 * * ? ") // 每天上午十点和下午四点执行
     public void work() throws Exception {
         List<BirthPerson> birthPersons = birthPersonService.getAllBirthPerson();
         if (birthPersons != null && birthPersons.size() > 0) {

@@ -33,8 +33,8 @@
       CREATE_TIME)
     values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{age,jdbcType=INTEGER}, 
       #{email,jdbcType=VARCHAR}, #{gender,jdbcType=VARCHAR}, #{birthday,jdbcType=DATE}, 
-      #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, 
-      #{createTime,jdbcType=TIMESTAMP})
+      #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, now(),
+      now())
   </insert>
   <insert id="insertSelective" parameterType="com.ncs.demo.po.User" >
     insert into user

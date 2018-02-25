@@ -51,9 +51,10 @@ $(document).ready(function(){
 				window.open("http://localhost:8081/index.html");
 			}
 		});*/
+		var loginUrl = location.origin + "/user/login";
 		$.ajax({
 			method : 'POST',
-			url: "http://localhost:8081/user/login",
+			url: loginUrl,
 			dataType:"json",
 			data:{"username":username,"password":password},
 			//async: false, //true:异步，false:同步
@@ -63,7 +64,8 @@ $(document).ready(function(){
 				if(data.code == "000000"){
 					//登录成功，但是ajax发起的请求不能跳转页面 这里再请求一次，
 					// 判断刚刚登录存得session存在，就跳转到index页面
-					window.location.href="http://localhost:8081/jumpToIndexPage";
+					var url = location.origin + "/jumpToIndexPage";
+					window.location.href = url;
 				} else {
 					alert(data.desc);
 				}

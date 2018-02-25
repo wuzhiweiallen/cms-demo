@@ -78,6 +78,9 @@ function editMoneyGift(){
         url = '/moneyGift/updateMoneyGift';
     }
 }
+$('#btnEp').click(function() {
+    serverLogin();
+})
 function saveMoneyGift(){
     $('#fm').form('submit',{
         url: url,
@@ -117,7 +120,7 @@ function removeMoneyGift(){
     if (row){
         $.messager.confirm('确认','您确定要删除吗？',function(r){
             if (r){
-                $.ajax({
+                /*$.ajax({
                     method : 'POST',
                     url: "/moneyGift/deleteMoneyGift/",
                     dataType:"json",
@@ -133,13 +136,14 @@ function removeMoneyGift(){
                         $('#mTb').datagrid('reload');    // reload the user data
                     },
                     error: function (err) {
-                        alert("error");
-
-                    }});
+                        $.messager.show({    // show error message
+                            title: '提示',
+                            msg: "error"
+                        });
+                    }});*/
                 $.post('/moneyGift/deleteMoneyGift/', id, function(result){
                     if (result){
-                        var resobj = JSON.parse(result);
-
+                        $('#mTb').datagrid('reload');
                     } else {
                         $.messager.show({    // show error message
                             title: '提示',

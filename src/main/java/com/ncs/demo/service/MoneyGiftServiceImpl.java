@@ -6,6 +6,7 @@ import com.ncs.demo.query.MoneyGiftQuery;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.List;
@@ -39,6 +40,11 @@ public class MoneyGiftServiceImpl implements MoneyGiftService{
     }
 
     @Override
+    public void insert(MoneyGift record) {
+        moneyGiftDao.insert(record);
+    }
+
+    @Override
     public List<MoneyGift> getMoneyGift(MoneyGiftQuery moneyGiftQuery) {
         int page = moneyGiftQuery.getPage();
         int size = moneyGiftQuery.getSize();
@@ -65,12 +71,6 @@ public class MoneyGiftServiceImpl implements MoneyGiftService{
         map.put("userId", userId);
 
         return moneyGiftDao.selectMoneyGiftCount(map);
-    }
-
-    @Override
-    public int insert(MoneyGift record) {
-
-        return moneyGiftDao.insert(record);
     }
 
     @Override

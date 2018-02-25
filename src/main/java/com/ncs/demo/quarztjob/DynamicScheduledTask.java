@@ -25,16 +25,13 @@ import java.util.List;
  * To change this template use File | Settings | File Templates.
  */
 @Component
-@EnableScheduling
 public class DynamicScheduledTask implements SchedulingConfigurer {
 
-    private Logger logger = Logger.getLogger(BirthdayTriggerJob.class);
+    private Logger logger = Logger.getLogger(DynamicScheduledTask.class);
 
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
 
-    private static String DEFAULT_CRON = "0/5 * * * * ?";
-
-    private String cron = DEFAULT_CRON;
+    private static String DEFAULT_CRON = "0 30,09 10,15 * * ? ";
 
     @Autowired
     private AffairRemindDao affairRemindDao;
@@ -83,24 +80,24 @@ public class DynamicScheduledTask implements SchedulingConfigurer {
         if(affairReminds != null && affairReminds.size() > 0){
             //循环开启定时任务
             affairReminds.forEach((affairRemind) -> {
-                String conn = affairRemind.getCron();
-                if (StringUtils.isNotBlank(conn)) {
+                String cron = affairRemind.getCron();
+                if (StringUtils.isNotBlank(cron)) {
                     taskRegistrar.addTriggerTask(() -> {
                         // 定时任务的业务逻辑
-                        logger.info("custom timer corn: " + conn);
-                        logger.info("timer desc: " + affairRemind.getContent());
+                        logger.info("custom timer: " + affairRemind.getContent() + "cron: "+cron);
                     }, triggerContext -> {
                         // 定时任务触发，可修改定时任务的执行周期
-                        CronTrigger trigger = new CronTrigger(conn);
+                        CronTrigger trigger = new CronTrigger(cron);
                         Date nextExecDate = trigger.nextExecutionTime(triggerContext);
                         return nextExecDate;
                     });
                 } else {
+                    String cronDefault = DEFAULT_CRON;
                     String nowDateString = DateUtils.getCurrentUnixTimeStamp();
                     taskRegistrar.addTriggerTask(() -> {
+                        logger.info("default timer: " + affairRemind.getContent() + ", cron: " + cronDefault);
                         if(nowDateString.equals(affairRemind.getRemindTime())){
                             // 定时任务的业务逻辑
-                            logger.info("timer desc: " + affairRemind.getContent());
                             String emailBody = affairRemind.getContent();
                             logger.info("==========sending email ==========");
                             BirthdayTriggerJob email = BirthdayTriggerJob.entity(CommonConstants.SMTP_HOST, CommonConstants.USER_NAME,
@@ -115,7 +112,7 @@ public class DynamicScheduledTask implements SchedulingConfigurer {
                         }
                     }, triggerContext -> {
                         // 定时任务触发，可修改定时任务的执行周期
-                        CronTrigger trigger = new CronTrigger(conn);
+                        CronTrigger trigger = new CronTrigger(cronDefault);
                         Date nextExecDate = trigger.nextExecutionTime(triggerContext);
                         return nextExecDate;
                     });

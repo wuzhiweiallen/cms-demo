@@ -4,6 +4,7 @@ import com.ncs.demo.po.MoneyGift;
 import com.ncs.demo.query.MoneyGiftQuery;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.RowBounds;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
@@ -50,7 +51,7 @@ public interface MoneyGiftService {
      * @param record
      * @return
      */
-    int insert(MoneyGift record);
+    void insert(MoneyGift record);
 
     /**
      * 更新MoneyGift

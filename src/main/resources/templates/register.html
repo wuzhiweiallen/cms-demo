@@ -1,10 +1,10 @@
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" >
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
 <title>CMS</title>
-<link rel="stylesheet" href="../static/css/style.css" />
-<link rel="stylesheet" type="text/css" href="../static/css/jquery.datetimepicker.css" />
+<link rel="stylesheet" href="../css/style.css" />
+<link rel="stylesheet" type="text/css" href="../css/jquery.datetimepicker.css" />
 
 	<link href="../static/css/default.css" rel="stylesheet" type="text/css" />
 	<link rel="stylesheet" type="text/css" href="../js/themes/default/easyui.css" />
@@ -50,7 +50,7 @@
 					Accept: "application/json; charset=utf-8"
 				},
 				method : 'POST',
-				url: "http://localhost:8081/user/saveUser",
+				url: location.origin + "/user/saveUser",
 				contentType: 'application/json',
 				dataType:"json",
 				data: JSON.stringify(json),
@@ -60,7 +60,7 @@
 				success: function (data) {
 					if(data.code == "000000"){
 						alert(data.desc);
-						window.location.href="http://localhost:8081/login.html";
+						window.location.href = location.origin + "/login.html";
 					}
 				},
 				error: function (err) {
@@ -131,6 +131,7 @@
 		});
 		});
 	</script>
+</head>
 <body>
 <div class="register-container">
 	<h1>注册</h1>
@@ -150,7 +151,7 @@
 			<input id="gender" type="text" name="gender" class="username" placeholder="性别" autocomplete="off"/>
 		</div>
 		<div>
-			<input id="birthday" name="birthday" type="text" placeholder="生日">
+			<input id="birthday" name="birthday" type="text" placeholder="生日"/>
 		</div>
 		<div>
 			<input id="username" type="text" name="username" class="username" placeholder="用户名" autocomplete="off"/>
