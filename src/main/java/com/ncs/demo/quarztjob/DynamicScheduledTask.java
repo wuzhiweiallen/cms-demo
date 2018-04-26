@@ -7,7 +7,6 @@ import com.ncs.demo.utils.DateUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.SchedulingConfigurer;
 import org.springframework.scheduling.config.ScheduledTaskRegistrar;
 import org.springframework.scheduling.support.CronTrigger;
@@ -118,7 +117,6 @@ public class DynamicScheduledTask implements SchedulingConfigurer {
                     });
                 }
             });
-
         }
     }
     /*public void setCron(String cron) {

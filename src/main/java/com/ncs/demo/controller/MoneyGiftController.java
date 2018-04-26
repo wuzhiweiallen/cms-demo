@@ -34,7 +34,7 @@ public class MoneyGiftController {
     public BaseResponseVO getMoneyGifyByCondition(@RequestParam(value = "name", required = false) String name,
                                                   @RequestParam(value = "givenDate", required = false) String givenDate,
                                                   @RequestParam(value = "page", defaultValue = "1") int page,
-                                                  @RequestParam(value = "size", defaultValue = "20") int size,
+                                                  @RequestParam(value = "rows", defaultValue = "10") int size,
                                                   HttpSession session){
         int total;
         List<MoneyGift> moneyGifts;
